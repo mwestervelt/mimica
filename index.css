@@ -26,7 +26,8 @@
 body {
 	font: 20px Montserrat, sans-serif;
 	line-height: 1.8;
-	color: #f5f6f7;
+	color: #444444;
+	
 }
 p {font-size: 16px;}
 .margin {margin-bottom: 45px;}
@@ -63,9 +64,10 @@ p {font-size: 16px;}
 	color: #1abc9c !important;
 }
 
-.btn {
-	text-align: center;
-	background-color: red;
+
+
+.hidden {
+  display: none;
 }
 
 .main {
@@ -74,10 +76,22 @@ p {font-size: 16px;}
 
 .flex-container {
   display: flex;
+	justify-content: center;
+	align-items: center
 }
 
 .flex-container > div {
+
   margin: 10px;
   padding: 20px;
   font-size: 20px;
+}
+
+.center {
+	text-align: center;
+}
+
+
+ul {
+	list-style: none
 }
