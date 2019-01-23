@@ -67,3 +67,17 @@ p {font-size: 16px;}
 	text-align: center;
 	background-color: red;
 }
+
+.main {
+	text-align: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container > div {
+  margin: 10px;
+  padding: 20px;
+  font-size: 20px;
+}
