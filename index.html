@@ -8,6 +8,7 @@
 	  <title>Osumazon</title>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href= "index.css">
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,6 +17,7 @@
 	</head>
 
 	<body>
+	
 	<nav class="navbar navbar-default">
 	  <div class="container">
 	    <div class="navbar-header">
@@ -26,10 +28,11 @@
 	      </button>
 	    </div>
 	    <div class="collapse navbar-collapse" id="myNavbar">
+
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">RULES</a></li>
-	        <li><a href="#">HIGH SCORES</a></li>
-	        <li><a href="#">ABOUT</a></li>
+	        <li><a class= "rules" href="#">RULES</a></li>
+	        <li><a class="scores" href="#">HIGH SCORES</a></li>
+	        <li><a class="about" href="#">ABOUT</a></li>
 					<li><a href="#">SPICYNA</a></li>
 	      </ul>
 	    </div>
@@ -43,12 +46,32 @@
 	  <h3>For Bowlers</h3>
 	</div>
 
+<div class="flex-container" id="main">
+	<div class="team-1-list">
+		<!-- team list here -->
+	</div>
+			<div class="center">
+				<div id="button-div">
+					<button class="btn" id= "easy"> Easy Word </button>
+					<button class="btn" id= "medium"> Medium Word </button>
+					<button class="btn" id= "hard"> Hard Word </button>
+					<div class="words-here">
+					</div>
+				</div>
+				<div class="team-form-div">
+
+				</div>
+			</div>
+		<div class="team-2-list" style="float: right">
+			<!-- team list here -->
+	</div>
+</div>
 
 
 	 <!-- Footer -->
 	<footer class="container-fluid bg-4 text-center">
 	  <p></p>
 	</footer>
-
+	<script type="text/javascript" src="./index.js"></script>
 	</body>
 </html>
