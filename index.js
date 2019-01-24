@@ -1,6 +1,4 @@
 // THIS THIS THIS THIS THIS THIS THIS THIS THIS
-
-
 document.addEventListener("DOMContentLoaded", init)
 let easyBtn = document.querySelector('#easy')
 easyBtn.addEventListener('click', splitWordStrength)
@@ -12,12 +10,14 @@ let startGame = true
 const startBtn = document.createElement("button")
 const aboutBtn = document.querySelector(".about")
 const centerSpace = document.querySelector(".center")
+const centerText = document.querySelector(".start-text")
+const selectText = document.querySelector(".select-text")
 const teamFormDiv = document.querySelector(".team-form-div")
 const btnDiv = document.querySelector("#button-div")
 let team1 = false
 let team2 = false
 aboutBtn.addEventListener("click", showAbout)
-
+let round = 0
 
 let team1Players = []
 let team2Players = []
@@ -30,18 +30,7 @@ function init(){
 
   centerSpace.append(startBtn)
   startBtn.addEventListener("click", createTeams)
-
 }
-
-// startBtn.addEventListener("click",  () => {
-//   var f = document.createElement("form");
-//   startGame = !startGame
-//   if (startGame) {
-//     f.style.display = 'block'
-//   } else {
-//     f.style.display = 'none'
-//   }
-// })
 
 function createTeams(){
   startBtn.setAttribute("class", "hidden")
@@ -91,9 +80,7 @@ function getTeam1FormInfo(event){
     teamUl.appendChild(playerLi)
     team1Area.append(teamUl)
   })
-  // console.log(team1Players)
   event.target.reset()
-  // document.querySelector('.team-form').addEventListener('submit', getTeam2FormInfo)
 }
 
 function getTeam2FormInfo(event){
@@ -104,6 +91,7 @@ function getTeam2FormInfo(event){
   team2Title.append(team2Name)
   team2Players = [event.target.player1.value, event.target.player2.value, event.target.player3.value, event.target.player4.value, event.target.player5.value, event.target.player6.value]
   team2Ul.append(team2Title)
+
   team2Players.forEach( player => {
     let team2Area = document.querySelector('.team-2-list')
     let playerLi = document.createElement("li")
@@ -113,24 +101,34 @@ function getTeam2FormInfo(event){
   })
 }
 
-
 function pickAPlayer(event){
   let currentPlayer1 = team1Players[0]
   let currentPlayer2 = team2Players[0]
-  centerSpace.append(currentPlayer1 + ": It's your turn ")
+  centerText.append(("It's your turn, " + currentPlayer1 + "!").toUpperCase())
+  selectText.append('Pick a word category:')
   console.log(currentPlayer1);
-  // for (var i = 0; i < team1Players.length; i++) {
-  //   team1Players[i]
-    currentPlayer1 = team1Players.unshift();
-     team1Players.push(currentPlayer1)
-    console.log(currentPlayer1[0]);
-  }
-  // flash player up team1Players[0]
-  //picks player 1 team 1 after go button press
-  //then this calls splitWordStrength
 
+  rotatePlayers();
+  beginGame();
+}
+// flash player up team1Players[0]
+//picks player 1 team 1 after go button press
+//then this calls splitWordStrength
 
+function rotatePlayers(){
+  debugger
+  team1Players = team1Players.filter(Boolean)
+  currentPlayer1 = team1Players.shift();
+   team1Players.push(currentPlayer1)
+  console.log(currentPlayer1);
+  readyBtn.setAttribute("class", "hidden")
+  console.log(currentPlayer1)
+}
 
+function beginGame(){
+  console.log('begin game working?')
+  splitWordStrength()
+}
 
 function splitWordStrength(){
   btnDiv.setAttribute("class", "block")
