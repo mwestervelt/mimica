@@ -14,6 +14,7 @@ const centerText = document.querySelector(".start-text")
 const selectText = document.querySelector(".select-text")
 const teamFormDiv = document.querySelector(".team-form-div")
 const btnDiv = document.querySelector("#button-div")
+const wordDiv = document.querySelector(".words-here")
 let team1 = false
 let team2 = false
 aboutBtn.addEventListener("click", showAbout)
@@ -116,7 +117,7 @@ function pickAPlayer(event){
 //then this calls splitWordStrength
 
 function rotatePlayers(){
-  debugger
+  // debugger
   team1Players = team1Players.filter(Boolean)
   currentPlayer1 = team1Players.shift();
    team1Players.push(currentPlayer1)
@@ -127,52 +128,37 @@ function rotatePlayers(){
 
 function beginGame(){
   console.log('begin game working?')
-  splitWordStrength()
-}
-
-function splitWordStrength(){
+  // splitWordStrength()
   btnDiv.setAttribute("class", "block")
-  getWords().then(wordsArray => {
-  const easyWords = []
-  const mediumWords = []
-  const hardWords = []
-  wordsArray.forEach(word => {
-    if (word.category_id === 1) {
-      easyWords.push(word)
-    } else if (word.category_id === 2) {
-      mediumWords.push(word)
-    } else if (word.category_id === 3) {
-      hardWords.push(word)
-    }
+}
+
+function splitWordStrength(e){
+  const wordDiv = document.querySelector(".words-here")
+  // const getEffingWordBtn = document.createElement("button")
+  // getEffingWordBtn.innerText = "Word me, dude."
+  // wordDiv.append(getEffingWordBtn)
+  wordDiv.innerHTML = `ready for a word?<br><br>`
+  getWords(event.target.dataset.id).then(wordsArray => {
+    // debugger;
+    let randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)]
+    setTimeout(()=>slapAWord(randomWord), 5000)
+    // set interval is the thing that we're looking for - gigi
   })
-  randomizeEasyWord(easyWords)
-  randomizeMediumWord(mediumWords)
-  randomizeHardWord(hardWords)
-})
-}
-
-function randomizeEasyWord(easyWords){
-  let randomWord = easyWords[Math.floor(Math.random()*easyWords.length)];
-  slapAWord(randomWord);
-}
-
-function randomizeMediumWord(mediumWords){
-  let randomWord = mediumWords[Math.floor(Math.random()*mediumWords.length)];
-  slapAWord(randomWord);
-}
-
-function randomizeHardWord(hardWords){
-  let randomWord = hardWords[Math.floor(Math.random()*hardWords.length)];
-  slapAWord(randomWord);
 }
 
 function slapAWord(word){
-  const wordDiv = document.querySelector(".words-here")
-  wordDiv.innerHTML = ""
-  wordDiv.innerHTML = `<h1>${word.wordname}<h1>`
-  // hide word
+const wordSpan = document.createElement("span")
+wordDiv.append(wordSpan)
+let wordForYou = word.wordname
+console.log("this is where the word gets added to the page");
+  wordSpan.append(wordForYou)
+   setTimeout( function () {
+     wordSpan.remove()}, 1000)
   // call timer function
 }
+
+// this is the timer countdown
+//add the timer thing here
 
 
 // function navBarHide(event){
@@ -188,8 +174,8 @@ function showAbout(event){
 }
 
 ///// FETCH THE DANG WORDS
-const wordsURL =  'http://localhost:3000/api/v1/words'
-function getWords(){
-  return fetch(wordsURL)
+const catsURL =  'http://localhost:3000/api/v1/categories'
+function getWords(id){
+  return fetch(catsURL + `/${id}`)
   .then(response => response.json())
 }

@@ -22,7 +22,7 @@
  cursor: pointer;
  list-style: none;
 } */
-html {
+html-1 {
   background: url(images/background_osumazon.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -46,7 +46,9 @@ body {
 
 }
 p {font-size: 16px;}
-.margin {margin-bottom: 45px;}
+.margin {margin-bottom: 45px;
+
+}
 .bg-1 {
 	background-color: #1abc9c; /* Green */
 	color: #ffffff;
@@ -64,7 +66,7 @@ p {font-size: 16px;}
 	color: #fff;
 }
 
-/*header image 
+/*header image
 /* .container-fluid {
 	padding-top: 70px;
 	padding-bottom: 70px;
@@ -121,4 +123,27 @@ p {font-size: 16px;}
 
 ul {
 	list-style: none
+}
+
+html {
+  overflow: hidden;
+}
+.number {
+  font-size: 12rem;
+}
+.v-item-group.v-bottom-nav.helper {
+  align-items: center;
+  width: auto;
+}
+.no-flex {
+  flex: inherit;
+}
+.helper .text em {
+  font-style: normal;
+}
+.helper .text em:not(.started) {
+  border-bottom: 1px solid;
+}
+.helper .text em.started {
+  border-top: 1px solid;
 }
