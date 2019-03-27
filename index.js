@@ -38,8 +38,8 @@ function createTeams(){
   teamFormDiv.innerHTML = `<form style="text-align: center" class="team-form"> Team Name:<br>
   <input type="text" name="team1name" value="" placeholder="enter team name"><br>
   Player Names:<br>
-  <input type="text" name="player1" value="" placeholder="enter player 1 name"><br>
-  <input type="text" name="player2" value="" placeholder="enter player 2 name"><br>
+  <input type="text" name="player1" value="" placeholder="enter player 1 name" required><br>
+  <input type="text" name="player2" value="" placeholder="enter player 2 name" required><br>
   <input type="text" name="player3" value="" placeholder="enter player 3 name"><br>
   <input type="text" name="player4" value="" placeholder="enter player 4 name"><br>
   <input type="text" name="player5" value="" placeholder="enter player 5 name"><br>
@@ -149,22 +149,40 @@ function splitWordStrength(e){
 function slapAWord(word){
 const wordSpan = document.createElement("span")
 wordDiv.append(wordSpan)
-let wordForYou = word.wordname
+wordDiv.innerHTML
+
 console.log("this is where the word gets added to the page");
-  wordSpan.append(wordForYou)
-   setTimeout( function () {
-     wordSpan.remove()}, 1000)
-  // call timer function
+  const timerButton = document.createElement('button')
+  timerButton.innerText = `${word.wordname}`
+  wordSpan.append(timerButton)
+  timerButton.addEventListener('click', startTimer)
+   // setTimeout( function () {
+   //   wordSpan.remove()}, 1000)
+
+
+   function startTimer(duration, display) {
+     wordSpan.remove()
+       var timer = duration, minutes, seconds;
+       setInterval(function () {
+           minutes = parseInt(timer / 60, 10)
+           seconds = parseInt(timer % 60, 10);
+
+           minutes = minutes < 10 ? "0" + minutes : minutes;
+           seconds = seconds < 10 ? "0" + seconds : seconds;
+
+           display.textContent = minutes + ":" + seconds;
+
+           if (--timer < 0) {
+               timer = duration;
+           }
+       }, 1000);
+   }
+   timerButton.onclick = function () {
+       var fortyFiveSeconds = 45
+           display = document.querySelector('#time');
+       startTimer(fortyFiveSeconds, display);
+   };
 }
-
-// this is the timer countdown
-//add the timer thing here
-
-
-// function navBarHide(event){
-//   // event.target.className === 'navbar-header'
-//     console.log("ANYONE ???")
-// }
 
 function showAbout(event){
   const mainSpace = document.querySelector("#main")

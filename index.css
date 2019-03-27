@@ -22,7 +22,7 @@
  cursor: pointer;
  list-style: none;
 } */
-html-1 {
+html {
   background: url(images/background_osumazon.png) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -125,9 +125,9 @@ ul {
 	list-style: none
 }
 
-html {
+/* html {
   overflow: hidden;
-}
+} */
 .number {
   font-size: 12rem;
 }
