@@ -1,6 +1,4 @@
 // THIS THIS THIS THIS THIS THIS THIS THIS THIS
-
-
 document.addEventListener("DOMContentLoaded", init)
 let easyBtn = document.querySelector('#easy')
 easyBtn.addEventListener('click', splitWordStrength)
@@ -12,12 +10,15 @@ let startGame = true
 const startBtn = document.createElement("button")
 const aboutBtn = document.querySelector(".about")
 const centerSpace = document.querySelector(".center")
+const centerText = document.querySelector(".start-text")
+const selectText = document.querySelector(".select-text")
 const teamFormDiv = document.querySelector(".team-form-div")
 const btnDiv = document.querySelector("#button-div")
+const wordDiv = document.querySelector(".words-here")
 let team1 = false
 let team2 = false
 aboutBtn.addEventListener("click", showAbout)
-
+let round = 0
 
 let team1Players = []
 let team2Players = []
@@ -30,26 +31,15 @@ function init(){
 
   centerSpace.append(startBtn)
   startBtn.addEventListener("click", createTeams)
-
 }
-
-// startBtn.addEventListener("click",  () => {
-//   var f = document.createElement("form");
-//   startGame = !startGame
-//   if (startGame) {
-//     f.style.display = 'block'
-//   } else {
-//     f.style.display = 'none'
-//   }
-// })
 
 function createTeams(){
   startBtn.setAttribute("class", "hidden")
   teamFormDiv.innerHTML = `<form style="text-align: center" class="team-form"> Team Name:<br>
   <input type="text" name="team1name" value="" placeholder="enter team name"><br>
   Player Names:<br>
-  <input type="text" name="player1" value="" placeholder="enter player 1 name"><br>
-  <input type="text" name="player2" value="" placeholder="enter player 2 name"><br>
+  <input type="text" name="player1" value="" placeholder="enter player 1 name" required><br>
+  <input type="text" name="player2" value="" placeholder="enter player 2 name" required><br>
   <input type="text" name="player3" value="" placeholder="enter player 3 name"><br>
   <input type="text" name="player4" value="" placeholder="enter player 4 name"><br>
   <input type="text" name="player5" value="" placeholder="enter player 5 name"><br>
@@ -91,9 +81,7 @@ function getTeam1FormInfo(event){
     teamUl.appendChild(playerLi)
     team1Area.append(teamUl)
   })
-  // console.log(team1Players)
   event.target.reset()
-  // document.querySelector('.team-form').addEventListener('submit', getTeam2FormInfo)
 }
 
 function getTeam2FormInfo(event){
@@ -104,6 +92,7 @@ function getTeam2FormInfo(event){
   team2Title.append(team2Name)
   team2Players = [event.target.player1.value, event.target.player2.value, event.target.player3.value, event.target.player4.value, event.target.player5.value, event.target.player6.value]
   team2Ul.append(team2Title)
+
   team2Players.forEach( player => {
     let team2Area = document.querySelector('.team-2-list')
     let playerLi = document.createElement("li")
@@ -113,74 +102,87 @@ function getTeam2FormInfo(event){
   })
 }
 
-
 function pickAPlayer(event){
   let currentPlayer1 = team1Players[0]
   let currentPlayer2 = team2Players[0]
-  centerSpace.append(currentPlayer1 + ": It's your turn ")
+  centerText.append(("It's your turn, " + currentPlayer1 + "!").toUpperCase())
+  selectText.append('Pick a word category:')
   console.log(currentPlayer1);
-  // for (var i = 0; i < team1Players.length; i++) {
-  //   team1Players[i]
-    currentPlayer1 = team1Players.unshift();
-     team1Players.push(currentPlayer1)
-    console.log(currentPlayer1[0]);
-  }
-  // flash player up team1Players[0]
-  //picks player 1 team 1 after go button press
-  //then this calls splitWordStrength
 
+  rotatePlayers();
+  beginGame();
+}
+// flash player up team1Players[0]
+//picks player 1 team 1 after go button press
+//then this calls splitWordStrength
 
+function rotatePlayers(){
+  // debugger
+  team1Players = team1Players.filter(Boolean)
+  currentPlayer1 = team1Players.shift();
+   team1Players.push(currentPlayer1)
+  console.log(currentPlayer1);
+  readyBtn.setAttribute("class", "hidden")
+  console.log(currentPlayer1)
+}
 
-
-function splitWordStrength(){
+function beginGame(){
+  console.log('begin game working?')
+  // splitWordStrength()
   btnDiv.setAttribute("class", "block")
-  getWords().then(wordsArray => {
-  const easyWords = []
-  const mediumWords = []
-  const hardWords = []
-  wordsArray.forEach(word => {
-    if (word.category_id === 1) {
-      easyWords.push(word)
-    } else if (word.category_id === 2) {
-      mediumWords.push(word)
-    } else if (word.category_id === 3) {
-      hardWords.push(word)
-    }
+}
+
+function splitWordStrength(e){
+  const wordDiv = document.querySelector(".words-here")
+  // const getEffingWordBtn = document.createElement("button")
+  // getEffingWordBtn.innerText = "Word me, dude."
+  // wordDiv.append(getEffingWordBtn)
+  wordDiv.innerHTML = `ready for a word?<br><br>`
+  getWords(event.target.dataset.id).then(wordsArray => {
+    // debugger;
+    let randomWord = wordsArray[Math.floor(Math.random()*wordsArray.length)]
+    setTimeout(()=>slapAWord(randomWord), 5000)
+    // set interval is the thing that we're looking for - gigi
   })
-  randomizeEasyWord(easyWords)
-  randomizeMediumWord(mediumWords)
-  randomizeHardWord(hardWords)
-})
-}
-
-function randomizeEasyWord(easyWords){
-  let randomWord = easyWords[Math.floor(Math.random()*easyWords.length)];
-  slapAWord(randomWord);
-}
-
-function randomizeMediumWord(mediumWords){
-  let randomWord = mediumWords[Math.floor(Math.random()*mediumWords.length)];
-  slapAWord(randomWord);
-}
-
-function randomizeHardWord(hardWords){
-  let randomWord = hardWords[Math.floor(Math.random()*hardWords.length)];
-  slapAWord(randomWord);
 }
 
 function slapAWord(word){
-  const wordDiv = document.querySelector(".words-here")
-  wordDiv.innerHTML = ""
-  wordDiv.innerHTML = `<h1>${word.wordname}<h1>`
-  // hide word
-  // call timer function
+const wordSpan = document.createElement("span")
+wordDiv.append(wordSpan)
+wordDiv.innerHTML
+
+console.log("this is where the word gets added to the page");
+  const timerButton = document.createElement('button')
+  timerButton.innerText = `${word.wordname}`
+  wordSpan.append(timerButton)
+  timerButton.addEventListener('click', startTimer)
+   // setTimeout( function () {
+   //   wordSpan.remove()}, 1000)
+
+
+   function startTimer(duration, display) {
+     wordSpan.remove()
+       var timer = duration, minutes, seconds;
+       setInterval(function () {
+           minutes = parseInt(timer / 60, 10)
+           seconds = parseInt(timer % 60, 10);
+
+           minutes = minutes < 10 ? "0" + minutes : minutes;
+           seconds = seconds < 10 ? "0" + seconds : seconds;
+
+           display.textContent = minutes + ":" + seconds;
+
+           if (--timer < 0) {
+               timer = duration;
+           }
+       }, 1000);
+   }
+   timerButton.onclick = function () {
+       var fortyFiveSeconds = 45
+           display = document.querySelector('#time');
+       startTimer(fortyFiveSeconds, display);
+   };
 }
-
-
-// function navBarHide(event){
-//   // event.target.className === 'navbar-header'
-//     console.log("ANYONE ???")
-// }
 
 function showAbout(event){
   const mainSpace = document.querySelector("#main")
@@ -190,8 +192,8 @@ function showAbout(event){
 }
 
 ///// FETCH THE DANG WORDS
-const wordsURL =  'http://localhost:3000/api/v1/words'
-function getWords(){
-  return fetch(wordsURL)
+const catsURL =  'http://localhost:3000/api/v1/categories'
+function getWords(id){
+  return fetch(catsURL + `/${id}`)
   .then(response => response.json())
 }
